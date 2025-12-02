@@ -1,0 +1,42 @@
+model:
+  name: resnet18
+  pretrained: true
+
+dataset:
+  num_classes: 10
+  image_size: 224
+  type: hf
+  name: "frgfm/imagenette"
+  split_train: "train"
+  split_val: "validation"
+
+ast:
+  target_activation: 0.35
+  initial_threshold: 0.7
+  min_threshold: 0.0
+  kp: 0.08
+  ki: 0.01
+  kp_warmup_epochs: 3
+  ki_warmup_epochs: 5
+  entropy_weight: 0.8
+  min_active: 4
+
+training:
+  epochs: 10
+  batch_size: 128
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.0005
+  num_workers: 4
+  mixed_precision: true
+  grad_accum_steps: 1
+  max_minutes: 120
+  early_stop_patience: 4
+
+logging:
+  output_dir: "results_imagenette"
+  jsonl_path: "results_imagenette/train_log_imagenette.jsonl"
+
+metrics:
+  base_flop_per_sample: 1.7e9
+  gpu_tdp_watts: 150

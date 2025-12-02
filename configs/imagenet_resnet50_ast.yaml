@@ -1,0 +1,41 @@
+model:
+  name: resnet50
+
+dataset:
+  num_classes: 1000
+  image_size: 224
+  train_dir: "/path/to/imagenet/train"
+  val_dir: "/path/to/imagenet/val"
+  type: folder
+
+ast:
+  target_activation: 0.25
+  initial_threshold: 1.0
+  min_threshold: 0.0
+  kp: 0.1
+  ki: 0.01
+  kp_warmup_epochs: 5
+  ki_warmup_epochs: 12
+  entropy_weight: 1.0
+  min_active: 8
+
+training:
+  epochs: 90
+  batch_size: 256
+  lr: 0.2
+  momentum: 0.9
+  weight_decay: 0.0001
+  min_lr: 0.0
+  num_workers: 8
+  mixed_precision: true
+  grad_accum_steps: 1
+  max_minutes: 360   # wall-clock cap for long runs
+  early_stop_patience: 15
+
+logging:
+  output_dir: "results"
+  jsonl_path: "results/train_log_resnet50.jsonl"
+
+metrics:
+  base_flop_per_sample: 7.8e9   # ResNet-50 fwd+bwd ~7.8 GFLOPs/sample
+  gpu_tdp_watts: 250            # adjust to your GPU (e.g., A100=400, 4090=450, 3090=350)

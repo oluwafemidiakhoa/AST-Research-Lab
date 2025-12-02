@@ -1,0 +1,42 @@
+model:
+  name: convnext_base
+  pretrained: true
+
+dataset:
+  num_classes: 1000
+  image_size: 224
+  train_dir: "/path/to/imagenet/train"
+  val_dir: "/path/to/imagenet/val"
+  type: folder
+
+ast:
+  target_activation: 0.22
+  initial_threshold: 0.8
+  min_threshold: 0.0
+  kp: 0.08
+  ki: 0.01
+  kp_warmup_epochs: 6
+  ki_warmup_epochs: 10
+  entropy_weight: 1.0
+  min_active: 16
+
+training:
+  epochs: 120
+  batch_size: 128
+  lr: 0.2
+  momentum: 0.9
+  weight_decay: 0.0005
+  min_lr: 0.0
+  num_workers: 8
+  mixed_precision: true
+  grad_accum_steps: 2    # helps on smaller GPUs
+  max_minutes: 400
+  early_stop_patience: 20
+
+logging:
+  output_dir: "results_convnext"
+  jsonl_path: "results_convnext/train_log_convnextb.jsonl"
+
+metrics:
+  base_flop_per_sample: 1.45e10  # ConvNeXt-B fwd+bwd ~14.5 GFLOPs/sample
+  gpu_tdp_watts: 300

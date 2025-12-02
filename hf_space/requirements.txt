@@ -1,0 +1,6 @@
+adaptive-sparse-training>=1.0.0
+torch>=2.0.0
+torchvision>=0.15.0
+timm>=0.9.12
+gradio>=4.0.0
+plotly>=5.14.0

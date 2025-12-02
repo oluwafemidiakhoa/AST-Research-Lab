@@ -1,0 +1,42 @@
+model:
+  name: vit_b_16
+  pretrained: true
+
+dataset:
+  num_classes: 1000
+  image_size: 224
+  train_dir: "/path/to/imagenet/train"
+  val_dir: "/path/to/imagenet/val"
+  type: folder
+
+ast:
+  target_activation: 0.28
+  initial_threshold: 0.9
+  min_threshold: 0.0
+  kp: 0.06
+  ki: 0.008
+  kp_warmup_epochs: 6
+  ki_warmup_epochs: 12
+  entropy_weight: 1.2
+  min_active: 12
+
+training:
+  epochs: 90
+  batch_size: 128
+  lr: 0.1
+  momentum: 0.9
+  weight_decay: 0.05
+  min_lr: 0.0
+  num_workers: 8
+  mixed_precision: true
+  grad_accum_steps: 2
+  max_minutes: 350
+  early_stop_patience: 15
+
+logging:
+  output_dir: "results_vit"
+  jsonl_path: "results_vit/train_log_vitb16.jsonl"
+
+metrics:
+  base_flop_per_sample: 1.95e10  # ViT-B/16 fwd+bwd ~19.5 GFLOPs/sample
+  gpu_tdp_watts: 320

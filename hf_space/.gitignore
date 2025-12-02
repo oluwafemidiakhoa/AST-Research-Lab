@@ -1,0 +1,13 @@
+# Data and models
+data/
+*.pt
+*.pth
+*.ckpt
+flagged/
+
+# Python
+__pycache__/
+*.pyc
+
+# Logs
+*.log
