@@ -70,3 +70,4 @@ Roadmap ideas
 - HF hub sharing for checkpoints and result artifacts.
 - GPU perf counter integration for better energy estimation.
 - Automated sweeps with Ax/Optuna for PI tuning.
+# AST-Research-Lab
