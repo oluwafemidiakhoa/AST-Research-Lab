@@ -52,14 +52,16 @@ class ASTDashboard:
         else:
             model = timm.create_model(model_name, pretrained=False, num_classes=10)
 
-        # AST Config
+        # AST Config (CPU mode for HuggingFace free tier)
         config = ASTConfig(
             target_activation_rate=activation_rate,
-            use_amp=True,
+            use_amp=False,  # Disable AMP on CPU
+            device='cpu'
         )
 
         # Start training
         progress(0.2, desc="Starting training...")
+        model = model.to('cpu')
         trainer = AdaptiveSparseTrainer(model, train_loader, val_loader, config)
 
         self.training_history = []
@@ -109,8 +111,8 @@ class ASTDashboard:
             root='./data', train=False, download=True, transform=transform
         )
 
-        train_loader = DataLoader(train_dataset, batch_size=128, shuffle=True, num_workers=2)
-        val_loader = DataLoader(val_dataset, batch_size=128, shuffle=False, num_workers=2)
+        train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=0)
+        val_loader = DataLoader(val_dataset, batch_size=64, shuffle=False, num_workers=0)
 
         return train_loader, val_loader
 
@@ -322,10 +324,10 @@ def create_demo():
                 gr.Markdown(f"**Energy Savings:** ~{(1-0.35)*100:.0f}%")
 
                 epochs = gr.Slider(
-                    minimum=10,
-                    maximum=100,
-                    value=30,
-                    step=10,
+                    minimum=5,
+                    maximum=50,
+                    value=10,
+                    step=5,
                     label="Training Epochs"
                 )
 
