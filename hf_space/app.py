@@ -55,8 +55,7 @@ class ASTDashboard:
         # AST Config
         config = ASTConfig(
             target_activation_rate=activation_rate,
-            entropy_weight=1.0,
-            use_mixed_precision=True,
+            use_amp=True,
         )
 
         # Start training
@@ -241,9 +240,8 @@ model.eval()
 
 **AST Configuration:**
 - Target Activation Rate: {activation_rate:.0%}
-- Entropy Weight: 1.0
-- PI Controller: Enabled
-- Mixed Precision: Enabled
+- Adaptive PI Controller: Enabled
+- Mixed Precision (AMP): Enabled
 
 ## Reproducing This Model
 
@@ -288,7 +286,7 @@ dashboard = ASTDashboard()
 def create_demo():
     """Create Gradio demo interface"""
 
-    with gr.Blocks(title="AST Training Dashboard", theme=gr.themes.Soft()) as demo:
+    with gr.Blocks(title="AST Training Dashboard") as demo:
         gr.Markdown("""
         # ⚡ Adaptive Sparse Training Dashboard
 
